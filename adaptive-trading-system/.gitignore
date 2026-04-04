@@ -1,0 +1,59 @@
+# Environment and secrets
+.env
+config/.env
+*.key
+*.secret
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Logs
+logs/*.log
+*.log
+
+# Data files (too large for git)
+data/raw/
+data/validated/
+data/processed/
+data/backups/
+*.duckdb
+*.duckdb.wal
+*.parquet
+*.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+checkpoint*.json
+
+# Evals
+evals/evals.json
+docs

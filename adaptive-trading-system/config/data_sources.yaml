@@ -1,0 +1,234 @@
+# Data Sources Configuration - MVP Dataset
+# Phase 1C: Minimum Viable Dataset Definition
+
+# ============================================================
+# OHLCV DATA (Price & Volume)
+# ============================================================
+
+ohlcv:
+  # Primary exchange for data collection
+  primary_exchange: binance
+
+  # Backup exchange (for cross-validation and redundancy)
+  backup_exchange: bybit
+
+  # Trading pairs to collect
+  pairs:
+    - BTC/USDT   # Benchmark - highest liquidity
+    - ETH/USDT   # Second largest - different behavior from BTC
+    - SOL/USDT   # High-beta alt - tests regime detection on volatile assets
+    - BNB/USDT   # Exchange token - different dynamics
+    - XRP/USDT   # High retail participation - mean-reversion candidate
+    - DOGE/USDT  # Meme/sentiment-driven - tests sentiment data pipeline
+
+  # Timeframes to collect
+  timeframes:
+    1m:
+      priority: medium
+      purpose: "Execution analysis, slippage modeling"
+      collection_phase: "Phase 1D"
+      analysis_phase: "Phase 2 (Module 2)"
+
+    5m:
+      priority: high
+      purpose: "Short-term strategy signals"
+      collection_phase: "Phase 1D"
+      analysis_phase: "Phase 1F, Module 2"
+
+    1h:
+      priority: critical
+      purpose: "Primary strategy timeframe"
+      collection_phase: "Phase 1D"
+      analysis_phase: "Phase 1F, Module 2, Module 4"
+
+    4h:
+      priority: critical
+      purpose: "Regime detection input"
+      collection_phase: "Phase 1D"
+      analysis_phase: "Phase 1F, Module 4"
+
+    1d:
+      priority: critical
+      purpose: "Trend analysis, performance tracking"
+      collection_phase: "Phase 1D"
+      analysis_phase: "Phase 1F, Module 2, Module 4"
+
+  # Historical depth
+  history:
+    start_date: "2023-01-01"  # Minimum 3 years
+    target_start_date: "2021-01-01"  # Target 5 years if available
+    end_date: "present"
+
+  # Expected data volume (estimates)
+  estimated_volume:
+    # 6 pairs × 5 timeframes × avg rows
+    total_rows_estimate: 15000000  # 15 million rows (3 years)
+    storage_estimate_gb: 5  # Parquet compressed
+
+  # Storage format
+  storage:
+    format: parquet
+    compression: snappy
+    partitioning: "by_year_month"  # Efficient queries
+
+# ============================================================
+# FUNDING RATES (Perpetual Futures)
+# ============================================================
+
+funding_rates:
+  exchange: binance  # Binance has 8-hour funding intervals
+
+  pairs:
+    - BTC/USDT:USDT  # Perpetual futures notation
+    - ETH/USDT:USDT
+
+  frequency: "8h"  # Funding paid every 8 hours
+
+  history:
+    start_date: "2023-01-01"
+    end_date: "present"
+
+  purpose: "Sentiment proxy - positive funding = longs paying shorts (bullish positioning)"
+
+  priority: critical
+
+  estimated_volume:
+    total_rows_estimate: 6570  # 3 years × 365 days × 3 intervals/day × 2 pairs
+    storage_estimate_gb: 0.001  # Very small
+
+# ============================================================
+# SENTIMENT DATA
+# ============================================================
+
+sentiment:
+  fear_greed_index:
+    source: "alternative.me"
+    endpoint: "https://api.alternative.me/fng/?limit=0&format=json"
+    api_key_required: false
+    rate_limit: "No official limit"
+
+    frequency: "daily"
+
+    history:
+      start_date: "2018-02-01"  # Full history available
+      end_date: "present"
+
+    fields:
+      - value  # 0-100
+      - classification  # Extreme Fear, Fear, Neutral, Greed, Extreme Greed
+
+    purpose: "Contrarian indicator - extremes may predict reversals"
+    priority: high
+
+    estimated_volume:
+      total_rows_estimate: 3000  # ~8 years of daily data
+      storage_estimate_gb: 0.0001
+
+# ============================================================
+# DOMINANCE METRICS
+# ============================================================
+
+dominance:
+  btc_dominance:
+    source: "coingecko"
+    endpoint: "https://api.coingecko.com/api/v3/global"
+    api_key_required: false  # Free tier available
+    rate_limit: "50 calls/minute (free tier)"
+
+    frequency: "daily"
+
+    history:
+      start_date: "2023-01-01"
+      end_date: "present"
+
+    purpose: "Altcoin season detection - low BTC dominance = altcoins outperforming"
+    priority: medium
+
+    estimated_volume:
+      total_rows_estimate: 1095  # 3 years daily
+      storage_estimate_gb: 0.0001
+
+# ============================================================
+# CURRENCY EXCHANGE RATES (NGN/USD)
+# ============================================================
+
+currency_rates:
+  ngn_usd:
+    source: "exchangerate-api"
+    endpoint: "https://api.exchangerate-api.com/v4/latest/USD"
+    api_key_required: false  # Free tier: 1500 requests/month
+    rate_limit: "1500 requests/month"
+
+    frequency: "daily"
+
+    history:
+      start_date: "2023-01-01"
+      end_date: "present"
+
+    purpose: "Track real purchasing power in NGN - performance must be measured in local terms"
+    priority: critical
+
+    notes: "Official CBN rate vs parallel market rate often diverge significantly"
+
+    estimated_volume:
+      total_rows_estimate: 1095  # 3 years daily
+      storage_estimate_gb: 0.0001
+
+# ============================================================
+# MACRO INDICATORS (OPTIONAL - Phase 1D or later)
+# ============================================================
+
+macro:
+  dxy_proxy:
+    source: "FRED API"
+    endpoint: "https://api.stlouisfed.org/fred/series/observations"
+    series_id: "DTWEXBGS"  # Trade Weighted U.S. Dollar Index: Broad, Goods and Services
+    api_key_required: true  # Free API key from FRED
+    rate_limit: "No strict limit"
+
+    frequency: "daily"
+
+    history:
+      start_date: "2023-01-01"
+      end_date: "present"
+
+    purpose: "Dollar strength - crypto often inversely correlated with DXY"
+    priority: low  # Can add later
+
+    estimated_volume:
+      total_rows_estimate: 1095
+      storage_estimate_gb: 0.0001
+
+# ============================================================
+# TOTAL ESTIMATED DATA VOLUME
+# ============================================================
+
+total_estimate:
+  total_rows: 15011760  # Mostly OHLCV
+  total_storage_gb: 5.1  # Compressed Parquet
+  collection_time_estimate: "8-12 hours (full historical backfill)"
+  daily_update_time_estimate: "5-10 minutes"
+
+# ============================================================
+# DATA ACCESSIBILITY FROM NIGERIA
+# ============================================================
+
+nigeria_accessibility:
+  all_sources_tested: true
+  notes: |
+    All data sources verified as accessible from Nigerian IP:
+    - Binance API: ✓ Accessible
+    - Bybit API: ✓ Accessible
+    - alternative.me: ✓ Accessible
+    - CoinGecko: ✓ Accessible
+    - exchangerate-api.com: ✓ Accessible
+    - FRED API: ✓ Accessible (VPN not required)
+
+# ============================================================
+# PHASE 1C COMPLETION CRITERIA
+# ============================================================
+# - [x] MVP dataset defined (6 pairs, 5 timeframes, 3+ years)
+# - [x] All data sources verified as accessible from Nigeria
+# - [x] Expected data volume estimated
+# - [x] Storage format specified (Parquet)
+# - [x] Priority levels assigned to each data type

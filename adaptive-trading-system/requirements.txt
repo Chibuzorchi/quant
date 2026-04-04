@@ -1,0 +1,26 @@
+# Core data stack
+ccxt>=4.0,<5.0
+pandas>=2.0,<3.0
+numpy>=1.24,<2.0
+polars>=0.20
+duckdb>=0.10
+pyarrow>=14.0
+fastparquet>=2023.10
+
+# Analysis & visualization
+jupyter>=1.0
+jupyterlab>=4.0
+matplotlib>=3.7
+plotly>=5.0
+seaborn>=0.13
+
+# Technical analysis
+ta-lib-bin>=0.5; python_version>="3.11"
+pandas-ta>=0.3.14b1
+
+# Utilities
+python-dotenv>=1.0
+loguru>=0.7
+schedule>=1.2
+requests>=2.31
+pyyaml>=6.0

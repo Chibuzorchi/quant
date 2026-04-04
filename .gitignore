@@ -1,0 +1,9 @@
+# Virtual environment
+venv/
+
+# OS
+.DS_Store
+
+# Claude
+.claude/
+MODULE_TRACKER.md

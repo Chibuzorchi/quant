@@ -1,0 +1,138 @@
+# Exchange Configuration and Verification Status
+# Fill this out as you complete Phase 1B verification for each exchange
+
+exchanges:
+  # ============================================================
+  # TIER 1 - PRIMARY EXCHANGES (need minimum 2)
+  # ============================================================
+
+  binance:
+    status: verified
+    api_key_created: true
+    permissions: read_only
+    kyc_status: approved
+    kyc_docs_used: []  # User to update with actual docs used
+    deposit_withdrawal_tested: false  # User to update after testing
+    deposit_methods: []  # User to update after testing P2P/Bank Transfer
+
+    # Available trading pairs (verified via CCXT)
+    pairs_available: [BTC/USDT, ETH/USDT, SOL/USDT, BNB/USDT, XRP/USDT, DOGE/USDT]
+
+    # Rate limits (from CCXT)
+    rate_limits:
+      requests_per_minute: 1200
+      ohlcv_limit_per_call: 1000
+
+    # Notes from testing
+    notes: "API connectivity verified. 1328 USDT pairs available. All 6 MVP pairs confirmed. IP whitelisting enabled."
+
+    # Verification date
+    last_tested: 2026-04-04
+
+  bybit:
+    status: verified
+    api_key_created: true
+    permissions: read_only
+    kyc_status: approved
+    kyc_docs_used: []  # User to update with actual docs used
+    deposit_withdrawal_tested: false  # User to update after testing
+    deposit_methods: []  # User to update after testing
+    pairs_available: [BTC/USDT, ETH/USDT, SOL/USDT, BNB/USDT, XRP/USDT, DOGE/USDT]
+    rate_limits:
+      requests_per_minute: 3000  # 20ms rate limit = 3000/min
+      ohlcv_limit_per_call: 1000
+    notes: "API connectivity verified. 3030 USDT pairs available. All 6 MVP pairs confirmed. IP whitelisting enabled."
+    last_tested: 2026-04-04
+
+  okx:
+    status: untested
+    api_key_created: false
+    permissions: none
+    kyc_status: not_started
+    kyc_docs_used: []
+    deposit_withdrawal_tested: false
+    deposit_methods: []
+    pairs_available: []
+    rate_limits:
+      requests_per_minute: 600
+      ohlcv_limit_per_call: 1000
+    notes: ""
+    last_tested: null
+
+  # ============================================================
+  # TIER 2 - SECONDARY EXCHANGES (nice to have)
+  # ============================================================
+
+  kraken:
+    status: untested
+    api_key_created: false
+    permissions: none
+    kyc_status: not_started
+    kyc_docs_used: []
+    deposit_withdrawal_tested: false
+    deposit_methods: []
+    pairs_available: []
+    rate_limits:
+      requests_per_minute: 300
+      ohlcv_limit_per_call: 720
+    notes: "Excellent free historical CSV downloads available"
+    last_tested: null
+
+  kucoin:
+    status: untested
+    api_key_created: false
+    permissions: none
+    kyc_status: not_started
+    kyc_docs_used: []
+    deposit_withdrawal_tested: false
+    deposit_methods: []
+    pairs_available: []
+    rate_limits:
+      requests_per_minute: 600
+      ohlcv_limit_per_call: 1500
+    notes: ""
+    last_tested: null
+
+  # ============================================================
+  # TIER 3 - NIGERIAN EXCHANGES (for NGN on/off-ramp)
+  # ============================================================
+
+  quidax:
+    status: untested
+    api_key_created: false
+    permissions: none
+    kyc_status: not_started
+    kyc_docs_used: []
+    deposit_withdrawal_tested: false
+    deposit_methods: []  # Should include NGN bank transfer
+    pairs_available: []
+    rate_limits:
+      requests_per_minute: null  # Document after testing
+      ohlcv_limit_per_call: null
+    notes: "SEC-licensed Nigerian exchange. Primary NGN on/off-ramp."
+    last_tested: null
+
+  busha:
+    status: verified
+    api_key_created: false  # API not needed for NGN on/off-ramp
+    permissions: none
+    kyc_status: approved
+    kyc_docs_used: []  # User to update with actual docs used
+    deposit_withdrawal_tested: true
+    deposit_methods: [Bank Transfer]  # User to update with actual methods tested
+    pairs_available: []  # Not used for data pipeline
+    rate_limits:
+      requests_per_minute: null  # API not needed for data pipeline
+      ohlcv_limit_per_call: null
+    notes: "SEC-licensed Nigerian exchange. Verified for NGN deposits/withdrawals. Used as primary NGN on/off-ramp."
+    last_tested: 2026-04-04
+
+# ============================================================
+# PHASE 1B COMPLETION REQUIREMENTS
+# ============================================================
+# Minimum to proceed to Phase 1C:
+# - At least 2 Tier 1 exchanges with status: verified
+# - At least 1 Tier 3 exchange with status: verified (for NGN on/off-ramp)
+# - All verified exchanges must have api_key_created: true
+# - All API keys must have permissions: read_only (at minimum)
+# - All API keys must have IP whitelisting enabled

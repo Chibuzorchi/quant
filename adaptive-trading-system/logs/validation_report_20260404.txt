@@ -1,0 +1,56 @@
+======================================================================
+DATA VALIDATION REPORT
+Date: 2026-04-04 15:06:30 UTC
+======================================================================
+
+SCHEMA: 12,564,292 / 12,564,292 PASS (100.0000%)
+
+RANGE: 12,554,173 / 12,554,173 PASS (100.0000%)
+  - 1 rows flagged for >50% price move (review, not failures)
+    XRP/USDT 2023-07-13 00:00:00+00:00: 0.471 → 0.8153 (73.1%)
+
+COMPLETENESS:
+  BNB/USDT 1d: 1,190 / 1,190 (100.0%)
+  BNB/USDT 1h: 28,549 / 28,550 (100.0%) — 1 missing, 1 small gaps filled
+  BNB/USDT 1m: 1,712,918 / 1,712,998 (100.0%) — 80 missing, 1 LARGE gaps (not filled)
+  BNB/USDT 4h: 7,138 / 7,138 (100.0%)
+  BNB/USDT 5m: 342,580 / 342,596 (100.0%) — 16 missing, 1 LARGE gaps (not filled)
+  BTC/USDT 1d: 1,190 / 1,190 (100.0%)
+  BTC/USDT 1h: 28,548 / 28,549 (100.0%) — 1 missing, 1 small gaps filled
+  BTC/USDT 1m: 1,712,854 / 1,712,934 (100.0%) — 80 missing, 1 LARGE gaps (not filled)
+  BTC/USDT 4h: 7,138 / 7,138 (100.0%)
+  BTC/USDT 5m: 342,568 / 342,584 (100.0%) — 16 missing, 1 LARGE gaps (not filled)
+  DOGE/USDT 1d: 1,190 / 1,190 (100.0%)
+  DOGE/USDT 1h: 28,550 / 28,551 (100.0%) — 1 missing, 1 small gaps filled
+  DOGE/USDT 1m: 1,712,960 / 1,713,040 (100.0%) — 80 missing, 1 LARGE gaps (not filled)
+  DOGE/USDT 4h: 7,138 / 7,138 (100.0%)
+  DOGE/USDT 5m: 342,589 / 342,605 (100.0%) — 16 missing, 1 LARGE gaps (not filled)
+  ETH/USDT 1d: 1,190 / 1,190 (100.0%)
+  ETH/USDT 1h: 28,548 / 28,549 (100.0%) — 1 missing, 1 small gaps filled
+  ETH/USDT 1m: 1,712,875 / 1,712,955 (100.0%) — 80 missing, 1 LARGE gaps (not filled)
+  ETH/USDT 4h: 7,138 / 7,138 (100.0%)
+  ETH/USDT 5m: 342,572 / 342,588 (100.0%) — 16 missing, 1 LARGE gaps (not filled)
+  SOL/USDT 1d: 1,190 / 1,190 (100.0%)
+  SOL/USDT 1h: 28,549 / 28,550 (100.0%) — 1 missing, 1 small gaps filled
+  SOL/USDT 1m: 1,712,896 / 1,712,976 (100.0%) — 80 missing, 1 LARGE gaps (not filled)
+  SOL/USDT 4h: 7,138 / 7,138 (100.0%)
+  SOL/USDT 5m: 342,576 / 342,592 (100.0%) — 16 missing, 1 LARGE gaps (not filled)
+  XRP/USDT 1d: 1,190 / 1,190 (100.0%)
+  XRP/USDT 1h: 28,549 / 28,550 (100.0%) — 1 missing, 1 small gaps filled
+  XRP/USDT 1m: 1,712,939 / 1,713,019 (100.0%) — 80 missing, 1 LARGE gaps (not filled)
+  XRP/USDT 4h: 7,138 / 7,138 (100.0%)
+  XRP/USDT 5m: 342,585 / 342,601 (100.0%) — 16 missing, 1 LARGE gaps (not filled)
+
+FRESHNESS: 27 / 33 sources fresh
+  - STALE: ohlcv/binance/BNB_USDT_1m.parquet — 1.2h old (threshold: 1.0h)
+  - STALE: ohlcv/binance/BTC_USDT_1m.parquet — 2.2h old (threshold: 1.0h)
+  - STALE: ohlcv/binance/BTC_USDT_5m.parquet — 2.5h old (threshold: 2.0h)
+  - STALE: ohlcv/binance/ETH_USDT_1m.parquet — 1.9h old (threshold: 1.0h)
+  - STALE: ohlcv/binance/ETH_USDT_5m.parquet — 2.2h old (threshold: 2.0h)
+  - STALE: ohlcv/binance/SOL_USDT_1m.parquet — 1.5h old (threshold: 1.0h)
+
+CROSS-SOURCE: 19 exchange(s) available
+
+======================================================================
+VERDICT: DATA APPROVED FOR RESEARCH USE
+======================================================================
